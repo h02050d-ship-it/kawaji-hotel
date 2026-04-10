@@ -1,0 +1,1358 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>川路ホテル | KAWAJI HOTEL</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --gold: #b8960c;
+      --gold-light: #d4af37;
+      --dark: #1a1a1a;
+      --darker: #0d0d0d;
+      --cream: #f5f0e8;
+      --cream-dark: #e8e0d0;
+      --text: #2a2a2a;
+      --text-light: #8a8a8a;
+      --white: #fefefe;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Noto Serif JP', serif;
+      color: var(--text);
+      background: var(--darker);
+      overflow-x: hidden;
+    }
+
+    /* ===== NAVIGATION ===== */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: all 0.5s ease;
+      background: transparent;
+    }
+
+    nav.scrolled {
+      background: rgba(13, 13, 13, 0.95);
+      padding: 12px 40px;
+      backdrop-filter: blur(10px);
+    }
+
+    .nav-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.3em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-size: 0.75rem;
+      font-weight: 300;
+      letter-spacing: 0.15em;
+      opacity: 0.8;
+      transition: opacity 0.3s;
+    }
+
+    .nav-links a:hover {
+      opacity: 1;
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      width: 24px;
+      height: 1px;
+      background: var(--white);
+      transition: all 0.3s;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('images/hero.jpg') center/cover no-repeat;
+      filter: brightness(0.4);
+      transform: scale(1.05);
+      animation: heroZoom 20s ease-in-out infinite alternate;
+    }
+
+    @keyframes heroZoom {
+      from { transform: scale(1.05); }
+      to { transform: scale(1.15); }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-subtitle-top {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.5em;
+      margin-bottom: 30px;
+      opacity: 0;
+      animation: fadeUp 1.5s ease 0.3s forwards;
+    }
+
+    .hero-title-jp {
+      font-size: 3.5rem;
+      font-weight: 200;
+      color: var(--white);
+      letter-spacing: 0.4em;
+      margin-bottom: 15px;
+      opacity: 0;
+      animation: fadeUp 1.5s ease 0.6s forwards;
+    }
+
+    .hero-title-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.6em;
+      margin-bottom: 40px;
+      opacity: 0;
+      animation: fadeUp 1.5s ease 0.9s forwards;
+    }
+
+    .hero-tagline {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.2em;
+      line-height: 2;
+      opacity: 0;
+      animation: fadeUp 1.5s ease 1.2s forwards;
+    }
+
+    .hero-scroll {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      opacity: 0;
+      animation: fadeUp 1.5s ease 1.8s forwards;
+    }
+
+    .hero-scroll span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.3em;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 50px;
+      background: linear-gradient(to bottom, var(--gold-light), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.5); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ===== SECTION COMMON ===== */
+    .section {
+      padding: 120px 40px;
+    }
+
+    .section-dark {
+      background: var(--darker);
+      color: var(--white);
+    }
+
+    .section-light {
+      background: var(--cream);
+      color: var(--text);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .section-header .en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.5em;
+      margin-bottom: 15px;
+      display: block;
+    }
+
+    .section-header h2 {
+      font-size: 2rem;
+      font-weight: 200;
+      letter-spacing: 0.3em;
+    }
+
+    .section-header .divider {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+      margin: 25px auto 0;
+    }
+
+    /* ===== CONCEPT ===== */
+    .concept {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .concept p {
+      font-size: 0.95rem;
+      font-weight: 300;
+      line-height: 2.5;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .concept .signature {
+      margin-top: 50px;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 0.2em;
+    }
+
+    /* ===== ROOMS ===== */
+    .room-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      margin-bottom: 2px;
+      min-height: 600px;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 0.8s ease;
+    }
+
+    .room-card.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .room-card:nth-child(even) {
+      direction: rtl;
+    }
+
+    .room-card:nth-child(even) > * {
+      direction: ltr;
+    }
+
+    .room-image {
+      position: relative;
+      overflow: hidden;
+      min-height: 600px;
+    }
+
+    .room-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.8s ease;
+    }
+
+    .room-card:hover .room-image img {
+      transform: scale(1.05);
+    }
+
+    .room-info {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 60px 80px;
+      background: var(--dark);
+    }
+
+    .room-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.7rem;
+      color: var(--gold);
+      letter-spacing: 0.5em;
+      margin-bottom: 20px;
+    }
+
+    .room-name {
+      font-size: 2.2rem;
+      font-weight: 200;
+      color: var(--white);
+      letter-spacing: 0.3em;
+      margin-bottom: 8px;
+    }
+
+    .room-name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.4em;
+      margin-bottom: 30px;
+    }
+
+    .room-desc {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2.2;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.05em;
+      margin-bottom: 30px;
+    }
+
+    .room-features {
+      list-style: none;
+      margin-bottom: 30px;
+    }
+
+    .room-features li {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      letter-spacing: 0.05em;
+    }
+
+    .room-features li::before {
+      content: '―';
+      margin-right: 10px;
+      color: var(--gold);
+    }
+
+    .room-price {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      color: var(--gold-light);
+      letter-spacing: 0.1em;
+    }
+
+    .room-price .yen {
+      font-size: 0.8rem;
+    }
+
+    .room-price .note {
+      font-family: 'Noto Serif JP', serif;
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.4);
+      margin-left: 8px;
+    }
+
+    .room-warning {
+      margin-top: 15px;
+      padding: 12px 16px;
+      background: rgba(184, 150, 12, 0.1);
+      border-left: 2px solid var(--gold);
+      font-size: 0.75rem;
+      color: var(--gold-light);
+      letter-spacing: 0.05em;
+      line-height: 1.8;
+    }
+
+    /* ===== DINING ===== */
+    .dining-grid {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    .dining-card {
+      background: var(--white);
+      padding: 0;
+      overflow: hidden;
+      transition: transform 0.3s ease;
+    }
+
+    .dining-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .dining-card-image {
+      height: 200px;
+      overflow: hidden;
+    }
+
+    .dining-card-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .dining-card-body {
+      padding: 30px;
+    }
+
+    .dining-card-title {
+      font-size: 1.1rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      margin-bottom: 5px;
+    }
+
+    .dining-card-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.75rem;
+      color: var(--gold);
+      letter-spacing: 0.3em;
+      margin-bottom: 20px;
+    }
+
+    .dining-menu {
+      list-style: none;
+    }
+
+    .dining-menu li {
+      font-size: 0.8rem;
+      font-weight: 300;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--cream-dark);
+      display: flex;
+      justify-content: space-between;
+      letter-spacing: 0.05em;
+    }
+
+    .dining-menu li:last-child {
+      border-bottom: none;
+    }
+
+    .dining-menu .price {
+      color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.85rem;
+    }
+
+    /* ===== MANAGER ===== */
+    .manager-section {
+      max-width: 900px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .manager-image {
+      position: relative;
+    }
+
+    .manager-image img {
+      width: 100%;
+      aspect-ratio: 3/4;
+      object-fit: cover;
+      filter: brightness(0.9);
+    }
+
+    .manager-image::after {
+      content: '';
+      position: absolute;
+      inset: 10px;
+      border: 1px solid var(--gold);
+      pointer-events: none;
+      opacity: 0.3;
+    }
+
+    .manager-text h3 {
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--gold);
+      letter-spacing: 0.4em;
+      margin-bottom: 20px;
+    }
+
+    .manager-text h4 {
+      font-size: 1.5rem;
+      font-weight: 200;
+      letter-spacing: 0.2em;
+      margin-bottom: 5px;
+      color: var(--white);
+    }
+
+    .manager-text .name-en {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      color: var(--gold-light);
+      letter-spacing: 0.3em;
+      margin-bottom: 30px;
+    }
+
+    .manager-text p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2.3;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.05em;
+    }
+
+    .manager-text .highlight {
+      color: var(--gold-light);
+      font-weight: 400;
+    }
+
+    /* ===== ACCESS ===== */
+    .access-content {
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .access-info {
+      margin-bottom: 40px;
+    }
+
+    .access-info p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      line-height: 2.2;
+      letter-spacing: 0.05em;
+    }
+
+    .access-map {
+      width: 100%;
+      height: 450px;
+      filter: grayscale(0.5) brightness(0.9);
+      border: none;
+    }
+
+    .access-note {
+      margin-top: 20px;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== RESERVATION BANNER ===== */
+    .reservation-banner {
+      padding: 80px 40px;
+      text-align: center;
+      background: linear-gradient(135deg, var(--dark), #2a2015);
+      border-top: 1px solid rgba(184, 150, 12, 0.2);
+      border-bottom: 1px solid rgba(184, 150, 12, 0.2);
+    }
+
+    .reservation-banner h3 {
+      font-size: 1.3rem;
+      font-weight: 200;
+      color: var(--white);
+      letter-spacing: 0.3em;
+      margin-bottom: 15px;
+    }
+
+    .reservation-banner p {
+      font-size: 0.8rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.15em;
+      margin-bottom: 30px;
+    }
+
+    .btn-reserve {
+      display: inline-block;
+      padding: 15px 50px;
+      border: 1px solid var(--gold);
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      background: none;
+      font-family: 'Noto Serif JP', serif;
+    }
+
+    .btn-reserve:hover {
+      background: var(--gold);
+      color: var(--darker);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 2000;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal {
+      background: var(--dark);
+      padding: 60px;
+      text-align: center;
+      max-width: 500px;
+      border: 1px solid rgba(184, 150, 12, 0.3);
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 15px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.2rem;
+      cursor: pointer;
+    }
+
+    .modal h3 {
+      font-size: 1.2rem;
+      font-weight: 200;
+      color: var(--white);
+      letter-spacing: 0.2em;
+      margin-bottom: 20px;
+    }
+
+    .modal p {
+      font-size: 0.85rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.7);
+      line-height: 2;
+      letter-spacing: 0.05em;
+    }
+
+    .modal .gold {
+      color: var(--gold-light);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      padding: 60px 40px;
+      text-align: center;
+      background: var(--darker);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    footer .footer-logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 300;
+      color: var(--white);
+      letter-spacing: 0.4em;
+      margin-bottom: 20px;
+    }
+
+    footer p {
+      font-size: 0.7rem;
+      color: var(--text-light);
+      letter-spacing: 0.1em;
+    }
+
+    footer .footer-note {
+      margin-top: 15px;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.2);
+      letter-spacing: 0.05em;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .room-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .room-card:nth-child(even) {
+        direction: ltr;
+      }
+
+      .room-image {
+        min-height: 350px;
+      }
+
+      .room-info {
+        padding: 40px 30px;
+      }
+
+      .manager-section {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+
+      .hero-title-jp {
+        font-size: 2.2rem;
+      }
+
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(13, 13, 13, 0.98);
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-links a {
+        font-size: 1rem;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .dining-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ===== LOADING ===== */
+    .loading-screen {
+      position: fixed;
+      inset: 0;
+      background: var(--darker);
+      z-index: 3000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      transition: opacity 0.8s ease;
+    }
+
+    .loading-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .loading-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.2rem;
+      font-weight: 300;
+      color: var(--gold-light);
+      letter-spacing: 0.5em;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 1; }
+    }
+
+    /* ===== IMAGE PLACEHOLDERS ===== */
+    .placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      color: rgba(255,255,255,0.3);
+      font-size: 3rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .placeholder::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0.15;
+      background: radial-gradient(ellipse at 30% 40%, rgba(255,255,255,0.2), transparent 60%);
+    }
+
+    .placeholder .icon {
+      font-size: 4rem;
+      opacity: 0.4;
+    }
+
+    .placeholder .label {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      opacity: 0.3;
+    }
+
+    .ph-hero { background: linear-gradient(135deg, #1a1510, #2a1f15, #1a1510); }
+    .ph-hikari { background: linear-gradient(135deg, #f5f5f0 0%, #e8e0c8 50%, #d4c090 100%); color: rgba(100,80,40,0.3); }
+    .ph-kaede { background: linear-gradient(135deg, #0a1628, #152040, #0a2040); }
+    .ph-sho { background: linear-gradient(135deg, #0a0a2a, #1a1040, #2a0a2a); }
+    .ph-nozomu { background: linear-gradient(135deg, #1a1a1a, #2a2a2a, #1a1a1a); }
+    .ph-isami { background: linear-gradient(135deg, #1a0a1a, #2a1520, #3a2020); }
+    .ph-dining { background: linear-gradient(135deg, #1a1510, #2a1f15, #1a1510); min-height: 200px; }
+    .ph-manager { background: linear-gradient(135deg, #1a1510, #201a12, #1a1510); }
+
+    .room-image, .dining-card-image, .manager-image {
+      background: #1a1814;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="loading-text">KAWAJI HOTEL</div>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav id="navbar">
+    <a href="#hero" class="nav-logo">KAWAJI HOTEL</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#concept" onclick="closeNav()">CONCEPT</a></li>
+      <li><a href="#rooms" onclick="closeNav()">ROOMS</a></li>
+      <li><a href="#dining" onclick="closeNav()">DINING</a></li>
+      <li><a href="#manager" onclick="closeNav()">MANAGER</a></li>
+      <li><a href="#access" onclick="closeNav()">ACCESS</a></li>
+    </ul>
+    <div class="hamburger" id="hamburger" onclick="toggleNav()">
+      <span></span><span></span><span></span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <p class="hero-subtitle-top">SINCE THE KAWAJI FAMILY BEGAN</p>
+      <h1 class="hero-title-jp">川路ホテル</h1>
+      <p class="hero-title-en">KAWAJI HOTEL</p>
+      <p class="hero-tagline">
+        五つの個性が織りなす、唯一無二の滞在体験<br>
+        ― ここは川路家の血が流れる者だけが辿り着ける場所 ―
+      </p>
+    </div>
+    <div class="hero-scroll">
+      <span>SCROLL</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- CONCEPT -->
+  <section class="section section-dark" id="concept">
+    <div class="section-header">
+      <span class="en">CONCEPT</span>
+      <h2>想い</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="concept">
+      <p>
+        五人の兄弟姉妹が育った川路家。<br>
+        その一人ひとりの個性、記憶、そして伝説を<br>
+        最高級の空間に昇華させました。<br><br>
+        ヨーグルトへの執念、海月との邂逅、<br>
+        クールな仮面の下に秘めた乙女心、<br>
+        鋼の肉体に宿る優しさ、<br>
+        そして暗闇から光へ踏み出す勇気。<br><br>
+        川路ホテルは、家族の歴史そのものです。
+      </p>
+      <p class="signature">支配人　川路 健徳</p>
+    </div>
+  </section>
+
+  <!-- ROOMS -->
+  <section class="section section-dark" id="rooms" style="padding-top: 40px;">
+    <div class="section-header">
+      <span class="en">ROOMS</span>
+      <h2>客室</h2>
+      <div class="divider"></div>
+    </div>
+
+    <!-- 光の間 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="images/room_hikari.jpg" alt="光の間">
+      </div>
+      <div class="room-info">
+        <span class="room-number">ROOM 01</span>
+        <h3 class="room-name">光の間</h3>
+        <p class="room-name-en">HIKARI NO MA</p>
+        <p class="room-desc">
+          「私、ヨーグルトしか食べない」――<br>
+          その宣言がマクドナルド駐車場での伝説的親子バトルへと発展し、<br>
+          ついには警察が臨場するに至った、川路家屈指のエピソードから<br>
+          着想を得た唯一無二の客室。<br><br>
+          壁一面のヨーグルトウォール、マクドナルド駐車場を再現した<br>
+          バルコニー、そして飲むヨーグルト飲み放題のドリンクバーを完備。<br>
+          ダイエットの決意と挫折を、五感で体験できる空間です。
+        </p>
+        <ul class="room-features">
+          <li>飲むヨーグルト ドリンクバー（24時間飲み放題）</li>
+          <li>マクドナルド駐車場ビュー（再現）</li>
+          <li>壁面ヨーグルトコレクション 全47都道府県分</li>
+          <li>枕元に常備されたブルガリアヨーグルト</li>
+        </ul>
+        <p class="room-price">
+          <span class="yen">&yen;</span>78,000<span class="note">/ 1泊（ヨーグルト食べ放題付）</span>
+        </p>
+        <div class="room-warning">
+          ※マクドナルドのメニューは一切ご提供しておりません。ご了承ください。
+        </div>
+      </div>
+    </div>
+
+    <!-- 楓の間 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="images/room_kaede.jpg" alt="楓の間">
+      </div>
+      <div class="room-info">
+        <span class="room-number">ROOM 02</span>
+        <h3 class="room-name">楓の間</h3>
+        <p class="room-name-en">KAEDE NO MA</p>
+        <p class="room-desc">
+          幼き日の楓が遭遇した謎の存在「くらげのおじさん」。<br>
+          その衝撃的な出会いを、ポップアートの世界観で昇華させた<br>
+          幻想的な客室です。<br><br>
+          天井一面に漂うクラゲのプロジェクションマッピング、<br>
+          クラゲ型のランプが揺れるベッドサイド、<br>
+          そして壁にはくらげのおじさんの目撃情報マップ。<br>
+          夜になると、どこからともなく現れるかもしれません。
+        </p>
+        <ul class="room-features">
+          <li>クラゲ プロジェクションマッピング</li>
+          <li>くらげ型アロマランプ（7色変化）</li>
+          <li>くらげのおじさん目撃情報マップ（実寸大）</li>
+          <li>サプライズ：くらげのおじさんが登場するかも！？</li>
+        </ul>
+        <p class="room-price">
+          <span class="yen">&yen;</span>65,000<span class="note">/ 1泊（くらげのおじさん遭遇率 約30%）</span>
+        </p>
+        <div class="room-warning">
+          ※くらげのおじさんの出現は天候・気分により変動します。
+        </div>
+      </div>
+    </div>
+
+    <!-- 翔の間 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="images/room_sho.jpg" alt="翔の間">
+      </div>
+      <div class="room-info">
+        <span class="room-number">ROOM 03</span>
+        <h3 class="room-name">翔の間</h3>
+        <p class="room-name-en">SHO NO MA</p>
+        <p class="room-desc">
+          普段はクールに振る舞いながらも、時折見せる破壊力抜群の笑顔。<br>
+          そして幼少期、自分の名を「しょう」と言えず<br>
+          「しお」と名乗っていた愛しき記憶。<br><br>
+          ネイビーブルーを基調としたクールな空間に、<br>
+          なぜかプリンセスベッド、ティアラ型の照明、<br>
+          ピンクのクッションが配置された唯一無二のギャップルーム。<br>
+          メイド服姿の翔くんがルームサービスに伺うかもしれません。
+        </p>
+        <ul class="room-features">
+          <li>プリンセスベッド with 天蓋（ネイビー×ピンク）</li>
+          <li>ティアラ型シャンデリア</li>
+          <li>「しお」専用ネームプレート</li>
+          <li>メイド服の翔くんによるルームサービス（不定期）</li>
+        </ul>
+        <p class="room-price">
+          <span class="yen">&yen;</span>72,000<span class="note">/ 1泊（翔くんのお名前は「しお」でお呼びください）</span>
+        </p>
+        <div class="room-warning">
+          ※翔くんへの「しょう」呼びは固くお断りしております。
+        </div>
+      </div>
+    </div>
+
+    <!-- 望の間 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="images/room_nozomu.jpg" alt="望の間">
+      </div>
+      <div class="room-info">
+        <span class="room-number">ROOM 04</span>
+        <h3 class="room-name">望の間</h3>
+        <p class="room-name-en">NOZOMU NO MA</p>
+        <p class="room-desc">
+          「休息」の概念を根本から覆す、川路ホテル最強の客室。<br>
+          ベッドの代わりにトレーニングベンチ、<br>
+          ミニバーの中身は全てプロテイン、<br>
+          バスルームにはダンベルが整然と並ぶ。<br><br>
+          ご宿泊のお客様には、望くん本人による<br>
+          マンツーマンパーソナルトレーニングが無料で付帯。<br>
+          チェックアウト時、あなたの体脂肪率は確実に下がっています。
+        </p>
+        <ul class="room-features">
+          <li>トレーニングベンチ兼ベッド（リクライニング機能付）</li>
+          <li>プロテインバー（30種類以上）</li>
+          <li>全身鏡（筋肉確認用）×4面</li>
+          <li>望くんのパーソナルトレーニング付</li>
+        </ul>
+        <p class="room-price">
+          <span class="yen">&yen;</span>95,000<span class="note">/ 1泊（プロテイン30杯・筋トレ指導付）</span>
+        </p>
+        <div class="room-warning">
+          ※就寝中もBGMは筋トレ用プレイリストが流れます。音量調整不可。
+        </div>
+      </div>
+    </div>
+
+    <!-- 勇の間 -->
+    <div class="room-card">
+      <div class="room-image">
+        <img src="images/room_isami.jpg" alt="勇の間">
+      </div>
+      <div class="room-info">
+        <span class="room-number">ROOM 05</span>
+        <h3 class="room-name">勇の間</h3>
+        <p class="room-name-en">ISAMI NO MA</p>
+        <p class="room-desc">
+          部屋の右半分は、完璧に再現された「引きこもり空間」。<br>
+          薄暗い照明、ふかふかの布団、お気に入りのぬいぐるみ、<br>
+          そして外の世界を遮断するカーテン。<br><br>
+          しかし一歩左半分に踏み出せば、<br>
+          そこには明るい教室が広がります。<br>
+          友達のメッセージが書かれた黒板、<br>
+          給食のトレイが置かれた机。<br>
+          暗闇から光へ――勇が歩んだ軌跡を追体験できる客室です。
+        </p>
+        <ul class="room-features">
+          <li>引きこもりゾーン（最高級布団・遮光カーテン完備）</li>
+          <li>学校ゾーン（黒板・給食セット・チャイム付）</li>
+          <li>境界線を越えると照明が自動で切り替わる演出</li>
+          <li>応援メッセージ黒板（ご宿泊者も書き込み可）</li>
+          <li>「ぐびぐびCCレモン」飲み放題（24時間補充）</li>
+        </ul>
+        <p class="room-price">
+          <span class="yen">&yen;</span>55,000<span class="note">/ 1泊（給食体験付・おかわり自由）</span>
+        </p>
+        <div class="room-warning">
+          ※チャイムは朝8:15に自動で鳴ります。二度寝は自己責任です。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DINING -->
+  <section class="section section-light" id="dining">
+    <div class="section-header">
+      <span class="en">DINING</span>
+      <h2>お食事</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="dining-grid">
+
+      <div class="dining-card">
+        <div class="dining-card-image">
+          <img src="images/dining_hikari.jpg" alt="光のヨーグルト懐石">
+        </div>
+        <div class="dining-card-body">
+          <h4 class="dining-card-title">光のヨーグルト懐石</h4>
+          <p class="dining-card-subtitle">HIKARI YOGURT KAISEKI</p>
+          <ul class="dining-menu">
+            <li><span>先付　ヨーグルトの白和え</span><span class="price"></span></li>
+            <li><span>椀物　飲むヨーグルトのすまし仕立て</span><span class="price"></span></li>
+            <li><span>造り　ヨーグルトムースの三種盛り</span><span class="price"></span></li>
+            <li><span>焼物　ヨーグルトマリネの鶏塩焼き</span><span class="price"></span></li>
+            <li><span>食事　ヨーグルトリゾット</span><span class="price"></span></li>
+            <li><span>甘味　ヨーグルトパフェ ～決意と挫折～</span><span class="price"></span></li>
+            <li><span><strong>フルコース</strong></span><span class="price">&yen;15,000</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-image">
+          <img src="images/dining_kaede.jpg" alt="楓の海月コース">
+        </div>
+        <div class="dining-card-body">
+          <h4 class="dining-card-title">楓の海月コース</h4>
+          <p class="dining-card-subtitle">KAEDE JELLYFISH COURSE</p>
+          <ul class="dining-menu">
+            <li><span>先付　くらげの酢の物</span><span class="price"></span></li>
+            <li><span>椀物　くらげのコンソメスープ</span><span class="price"></span></li>
+            <li><span>造り　活くらげ刺身（透明度100%）</span><span class="price"></span></li>
+            <li><span>揚物　くらげの天ぷら</span><span class="price"></span></li>
+            <li><span>食事　くらげ炊き込みご飯</span><span class="price"></span></li>
+            <li><span>甘味　くらげゼリー ～邂逅の記憶～</span><span class="price"></span></li>
+            <li><span><strong>フルコース</strong></span><span class="price">&yen;12,000</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-image">
+          <img src="images/dining_sho.jpg" alt="翔のギャップディナー">
+        </div>
+        <div class="dining-card-body">
+          <h4 class="dining-card-title">翔のギャップディナー</h4>
+          <p class="dining-card-subtitle">SHO'S GAP DINNER</p>
+          <ul class="dining-menu">
+            <li><span>先付　クールな見た目の可愛い前菜</span><span class="price"></span></li>
+            <li><span>椀物　男前味噌汁（ハート型の麩入り）</span><span class="price"></span></li>
+            <li><span>造り　刺身盛り（盛付けがプリンセス風）</span><span class="price"></span></li>
+            <li><span>肉料理　漢のステーキ ピンクペッパー添え</span><span class="price"></span></li>
+            <li><span>食事　黒カレー（隠し味はいちごジャム）</span><span class="price"></span></li>
+            <li><span>甘味　しおちゃんのプリンアラモード</span><span class="price"></span></li>
+            <li><span><strong>フルコース</strong></span><span class="price">&yen;13,500</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-image">
+          <img src="images/dining_nozomu.jpg" alt="望のプロテインコース">
+        </div>
+        <div class="dining-card-body">
+          <h4 class="dining-card-title">望のプロテインコース</h4>
+          <p class="dining-card-subtitle">NOZOMU PROTEIN COURSE</p>
+          <ul class="dining-menu">
+            <li><span>先付　ささみの刺身（タンパク質12g）</span><span class="price"></span></li>
+            <li><span>椀物　卵白スープ（タンパク質8g）</span><span class="price"></span></li>
+            <li><span>造り　マグロ赤身5点盛り（タンパク質35g）</span><span class="price"></span></li>
+            <li><span>肉料理　鶏胸肉1kg（タンパク質230g）</span><span class="price"></span></li>
+            <li><span>食事　プロテインライス</span><span class="price"></span></li>
+            <li><span>甘味　プロテインバー（デザートです）</span><span class="price"></span></li>
+            <li><span><strong>フルコース（総タンパク質 350g）</strong></span><span class="price">&yen;18,000</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="dining-card">
+        <div class="dining-card-image">
+          <img src="images/dining_isami.jpg" alt="勇の給食スペシャル">
+        </div>
+        <div class="dining-card-body">
+          <h4 class="dining-card-title">勇の給食スペシャル</h4>
+          <p class="dining-card-subtitle">ISAMI SCHOOL LUNCH SPECIAL</p>
+          <ul class="dining-menu">
+            <li><span>1限目　ミルメークで乾杯</span><span class="price"></span></li>
+            <li><span>2限目　揚げパン（きなこ or ココア）</span><span class="price"></span></li>
+            <li><span>3限目　ソフト麺ミートソース</span><span class="price"></span></li>
+            <li><span>4限目　鯨の竜田揚げ（レジェンド枠）</span><span class="price"></span></li>
+            <li><span>給食　わかめご飯＆カレー</span><span class="price"></span></li>
+            <li><span>放課後　冷凍みかん＆ムース</span><span class="price"></span></li>
+            <li><span><strong>フルコース（おかわり自由）</strong></span><span class="price">&yen;8,800</span></li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- MANAGER -->
+  <section class="section section-dark" id="manager">
+    <div class="section-header">
+      <span class="en">MANAGER</span>
+      <h2>支配人ご挨拶</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="manager-section">
+      <div class="manager-image">
+        <img src="images/manager.jpg" alt="支配人 川路健徳・喜恵" style="width:100%; aspect-ratio:3/4; object-fit:cover;">
+      </div>
+      <div class="manager-text">
+        <h3>OWNER'S MESSAGE</h3>
+        <h4>川路 健徳 ・ 喜恵</h4>
+        <p class="name-en">KAWAJI KENTOKU &amp; KIE</p>
+        <p>
+          川路ホテルのページをご覧いただき、<br>
+          誠にありがとうございます。<br><br>
+          支配人の川路健徳でございます。<br>
+          当ホテルでは、<span class="highlight">あぐらの上で赤子を抱えながら<br>
+          ゲームコントローラーを握り続けた</span>父としての経験を活かし、<br>
+          「マルチタスク」をコンセプトにした<br>
+          おもてなしをご提供いたします。<br><br>
+          女将の喜恵は、独自の数え方<br>
+          <span class="highlight">「ぱー、とぅー、とぅりー、とー、たい」</span>で<br>
+          お部屋番号をご案内いたします。<br>
+          一般的な数字の概念を超越した、<br>
+          唯一無二のカウンティング体験をお楽しみください。<br><br>
+          五人の子どもたちが織りなす<br>
+          個性豊かな客室で、<br>
+          川路家の温もりをご堪能くださいませ。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCESS -->
+  <section class="section section-light" id="access">
+    <div class="section-header">
+      <span class="en">ACCESS</span>
+      <h2>アクセス</h2>
+      <div class="divider"></div>
+    </div>
+    <div class="access-content">
+      <div class="access-info">
+        <p>
+          〒540-0002 大阪府大阪市中央区大阪城1-1<br>
+          大阪城天守閣 隣接（※実際には存在しません）<br><br>
+          JR大阪環状線「大阪城公園駅」より徒歩20分<br>
+          大阪メトロ「谷町四丁目駅」より徒歩15分<br>
+          ※迷った場合は天守閣を目指してください
+        </p>
+      </div>
+      <iframe
+        class="access-map"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3281.0!2d135.5256!3d34.6873!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6000e0cd5c283afd%3A0x400d18e727b10b0!2z5aSn6Ziq5Z-O!5e0!3m2!1sja!2sjp!4v1"
+        allowfullscreen=""
+        loading="lazy">
+      </iframe>
+      <p class="access-note">
+        ※当ホテルは大阪城内には実在しません。お問い合わせはご遠慮ください。<br>
+        ※カーナビに「川路ホテル」と入力しても表示されません。
+      </p>
+    </div>
+  </section>
+
+  <!-- RESERVATION BANNER -->
+  <div class="reservation-banner">
+    <h3>ご予約</h3>
+    <p>RESERVATION</p>
+    <button class="btn-reserve" onclick="openModal()">ご予約はこちら</button>
+  </div>
+
+  <!-- RESERVATION MODAL -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal">
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <h3>申し訳ございません</h3>
+      <p>
+        当ホテルは<br>
+        <span class="gold">川路家の血縁者のみ</span><br>
+        ご予約いただけます。<br><br>
+        ご予約をご希望の方は、<br>
+        川路家との婚姻関係の締結を<br>
+        ご検討くださいませ。<br><br>
+        <span style="font-size: 0.75rem; opacity: 0.5;">
+          ※現在、全室満室でございます。<br>
+          ※空室状況は川路家LINEグループにてご確認ください。
+        </span>
+      </p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-logo">KAWAJI HOTEL</div>
+    <p>〒540-0002 大阪府大阪市中央区大阪城1-1</p>
+    <p style="margin-top: 8px;">TEL: 0120-KAWAJI（※繋がりません）</p>
+    <p class="footer-note">
+      &copy; KAWAJI HOTEL. All Rights Reserved.<br>
+      This is a parody site. 川路家の家族愛で運営されています。
+    </p>
+  </footer>
+
+  <script>
+    // Loading screen - hide after brief delay, don't wait for all images
+    function hideLoading() {
+      document.getElementById('loadingScreen').classList.add('hidden');
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(hideLoading, 1500);
+    });
+    // Fallback in case DOMContentLoaded already fired
+    setTimeout(hideLoading, 2000);
+
+    // Navbar scroll
+    window.addEventListener('scroll', () => {
+      const nav = document.getElementById('navbar');
+      if (window.scrollY > 50) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    });
+
+    // Mobile nav
+    function toggleNav() {
+      document.getElementById('navLinks').classList.toggle('open');
+    }
+    function closeNav() {
+      document.getElementById('navLinks').classList.remove('open');
+    }
+
+    // Modal
+    function openModal() {
+      document.getElementById('modal').classList.add('active');
+    }
+    function closeModal() {
+      document.getElementById('modal').classList.remove('active');
+    }
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target === e.currentTarget) closeModal();
+    });
+
+    // Scroll animation for room cards
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.room-card').forEach(card => {
+      observer.observe(card);
+    });
+  </script>
+
+</body>
+</html>
